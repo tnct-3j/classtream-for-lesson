@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "nicojs": "^1.1.8",
-    "search-nico-js": "^0.1.1"
+    "require": "^2.4.20",
+    "search-nico-js": "^0.1.1",
+    "slackbots": "^1.1.0"
   }
 }

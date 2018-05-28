@@ -1,12 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>3J Classtream</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js">
   </script>
 </head>
+
 <body>
   <p>hello world!</p>
+  <script>
+    /*console.log("hello world");*/
+    var SlackBot = require('slackbots');
+    var Config = require('./config');
+    var fs = require('fs');
+    var Config = fs.readFileSync('config.json', 'utf-8');
+    var key = JSON.parse(Config);
+    var bot = new SlackBot({
+      token: key.bots_token,
+      name: 'classtream'
+    });
+
+    /* get slack message */
+    /**
+     * @param {object} data
+     */
+    bot.on('message', function (data) {
+      console.log(data);
+    });
+    bot.on('start', function () {
+      var params = {
+        icon_emoji: ':cat:'
+      };
+      bot.postMessageToChannel('test', 'hoge', params);
+    });
+  </script>
 </body>
+
 </html>
