@@ -1,4 +1,12 @@
+/**
+ * グラフを担当するクラス
+ */
 class Graph extends Chart {
+  /**
+   * コンストラクタ
+   *
+   * グラフを生成して、タイマーを起動する
+   */
   constructor(id, time) {    
     var now = new Date();
     now = now.toLocaleTimeString();
@@ -100,13 +108,20 @@ class Graph extends Chart {
     this.time = time;
     this.timer()
   }
+
+  /**
+   * 現在を表すグラフの値を1加算する
+   */
   add(lineId) {
     // 一番新しい要素に1を加算する
     var index = graph.data.datasets[lineId].data.length - 1;
     this.data.datasets[lineId].data[index] ++;
     this.update();
   }
-  
+
+  /**
+   * グラフのラベルに現在時刻を足す
+   */
   chop() {
     // ラベルを足す
     var time = new Date();
@@ -126,9 +141,13 @@ class Graph extends Chart {
       this.data.datasets[lineId].data[index] = 0;
     }
     
+    // 画面の更新
     this.update();
   }
-  
+
+  /**
+   * 定期的に、chopを実行する
+   */
   timer() {
     // 値を計算する
     this.chop();
