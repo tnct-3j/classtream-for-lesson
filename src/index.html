@@ -11,21 +11,18 @@
 <body>
   <p>hello world!</p>
   <script>
-    /*console.log("hello world");*/
-    var SlackBot = require('slackbots');
-    var Config = require('./config');
+    var slackbot = require('slackbots');
+    var config = require('./config');
     var fs = require('fs');
-    var Config = fs.readFileSync('config.json', 'utf-8');
-    var key = JSON.parse(Config);
-    var bot = new SlackBot({
+    var config = fs.readFileSync('config.json', 'utf-8');
+    var key = JSON.parse(config);
+    var bot = new slackbot({
       token: key.bots_token,
       name: 'classtream'
     });
-
-    /* get slack message */
     /**
-     * @param {object} data
-     */
+      *get slack message 
+      */
     bot.on('message', function (data) {
       console.log(data);
     });
