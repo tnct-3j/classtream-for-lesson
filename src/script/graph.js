@@ -1,12 +1,16 @@
 class Graph extends Chart {
-  constructor(id) {
+  constructor(id, time) {    
+    var now = new Date();
+    now = now.toLocaleTimeString();
+    now = now.slice(0, 5);
+    
     var config = {
       //グラフの種類
       type: 'line',
       //データの設定
       data: {
         //データ項目のラベル
-        labels: ["1分", "2分", "3分", "4分", "5分", "6分"],
+        labels: [now],
         //データセット
         datasets: [
           {
@@ -35,7 +39,7 @@ class Graph extends Chart {
             //結合点より外でマウスホバーを認識する範囲（ピクセル単位）
             pointHitRadius: 15,
             //グラフのデータ
-            data: [12, 19, 3, 5, 2, 3]
+            data: [0]
         },
           {
             //凡例
@@ -63,7 +67,7 @@ class Graph extends Chart {
             //結合点より外でマウスホバーを認識する範囲（ピクセル単位）
             pointHitRadius: 10,
             //グラフのデータ
-            data: [15, 15, 6, 8, 5, 6]
+            data: []
         }
       ]
       },
@@ -91,6 +95,10 @@ class Graph extends Chart {
     // canvasを読み込む
     var canvas = document.getElementById(id);
     super(canvas.getContext('2d'), config);
+    
+    // タイマーを開始
+    this.time = time;
+    this.timer()
   }
   add(lineId) {
     // 一番新しい要素に1を加算する
@@ -98,7 +106,40 @@ class Graph extends Chart {
     this.data.datasets[lineId].data[index] ++;
     this.update();
   }
+  
+  chop() {
+    // ラベルを足す
+    var time = new Date();
+    time = time.toLocaleTimeString();
+    time = time.slice(0, 5);
+    this.data.labels.push(time);
+    
+    // ゼロ埋めをする
+    var lineId = 0;
+    var index = this.data.labels.length - 1;
+    if (this.data.datasets[lineId].data[index] == undefined) {
+      this.data.datasets[lineId].data[index] = 0;
+    }
+    lineId = 1;
+    index = this.data.labels.length - 1;
+    if (this.data.datasets[lineId].data[index] == undefined) {
+      this.data.datasets[lineId].data[index] = 0;
+    }
+    
+    this.update();
+  }
+  
+  timer() {
+    // 値を計算する
+    this.chop();
+    
+    var self = this;
+    setInterval(
+      () => {
+        self.chop();
+      }, self.time * 1000);
+  }
 }
 
 
-var graph = new Graph("graph");
+var graph = new Graph("graph", 10);
