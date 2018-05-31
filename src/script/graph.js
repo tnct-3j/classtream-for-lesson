@@ -92,6 +92,12 @@ class Graph extends Chart {
     var canvas = document.getElementById(id);
     super(canvas.getContext('2d'), config);
   }
+  add(lineId) {
+    // 一番新しい要素に1を加算する
+    var index = graph.data.datasets[lineId].data.length - 1;
+    this.data.datasets[lineId].data[index] ++;
+    this.update();
+  }
 }
 
 
