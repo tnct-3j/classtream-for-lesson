@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>3J Classtream</title>
@@ -10,8 +11,33 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
   
 </head>
+
 <body>
   <p>hello world!</p>
+  <script>
+    var slackbot = require('slackbots');
+    var config = require('./config');
+    var fs = require('fs');
+    var config = fs.readFileSync('config.json', 'utf-8');
+    var key = JSON.parse(config);
+    var bot = new slackbot({
+      token: key.bots_token,
+      name: 'classtream'
+    });
+    /**
+      * get slack message 
+      */
+    bot.on('message', function (data) {
+      console.log(data);
+    });
+    bot.on('start', function () {
+      var params = {
+        icon_emoji: ':cat:'
+      };
+      bot.postMessageToChannel('test', 'hoge', params);
+    });
+  </script>
+
   <div id="screen">
   </div>
   <script src='script/comment.js'></script>
