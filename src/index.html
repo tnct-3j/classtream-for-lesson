@@ -4,8 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <title>3J Classtream</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js">
-  </script>
+
+  <link rel="stylesheet" type="text/css" href="style/marquee.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  
 </head>
 
 <body>
@@ -21,7 +25,7 @@
       name: 'classtream'
     });
     /**
-      *get slack message 
+      * get slack message 
       */
     bot.on('message', function (data) {
       console.log(data);
@@ -33,6 +37,12 @@
       bot.postMessageToChannel('test', 'hoge', params);
     });
   </script>
-</body>
 
+  <div id="screen">
+  </div>
+  <script src='script/comment.js'></script>
+
+  <canvas id="graph" height="450" width="600"></canvas>
+  <script src="script/graph.js"></script>
+</body>
 </html>
