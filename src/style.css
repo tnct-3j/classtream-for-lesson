@@ -1,0 +1,32 @@
+@import url('https://unpkg.com/purecss@1.0.0/build/pure-min.css');
+figure {
+    margin: 0;
+}
+
+.relative {
+    width: 100vw;
+    height: 100vh;
+	position: relative;
+}
+
+.absolute {
+    position: absolute;
+    top: 0%
+}
+
+table  {
+    table-layout: fixed;
+    text-align: center;
+    border: 10px #000000 solid;
+    width: 100vw;
+    height: 100vh;
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.4)
+}
+
+@media screen and (max-width: 320px) and (max-height: 480px) {
+    table {
+        width: 320px;
+        height: 480px;
+    }
+}

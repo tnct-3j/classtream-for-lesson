@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <title>3J Classtream</title>
-
-  <link rel="stylesheet" type="text/css" href="style/marquee.css">
-
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js">
+  </script>
 </head>
 
-<body>
-  <p>hello world!</p>
+<body style="overflow: hidden;">
+  <figure class="relative">
+    <canvas id="graph"></canvas>
+    <script src="script/graph.js"></script>
+    <figcaption class="absolute">
+      <table class="pure-table pure-table-bordered">
+        <tbody>
+          <tr>
+            <td>streem</td>
+          </tr>
+          <tr>
+            <td>question</td>
+          </tr>
+        </tbody>
+      </table>
+    </figcaption>
+  </figure>
+
+
+
+
   <script>
     var slackbot = require('slackbots');
     var config = require('./config');
@@ -25,7 +43,7 @@
       name: 'classtream'
     });
     /**
-      * get slack message 
+      *get slack message 
       */
     bot.on('message', function (data) {
       console.log(data);
@@ -37,12 +55,6 @@
       bot.postMessageToChannel('test', 'hoge', params);
     });
   </script>
-
-  <div id="screen">
-  </div>
-  <script src='script/comment.js'></script>
-
-  <canvas id="graph" height="450" width="600"></canvas>
-  <script src="script/graph.js"></script>
 </body>
+
 </html>
