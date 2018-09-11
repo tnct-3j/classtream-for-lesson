@@ -21,7 +21,7 @@
     var config = fs.readFileSync('config.json', 'utf-8');
     var key = JSON.parse(config);
     var bot = new slackbot({
-      token: key.bots_token,
+      token: key.token,
       name: 'classtream'
     });
     /**
@@ -29,13 +29,20 @@
       */
     bot.on('message', function (data) {
       console.log(data);
+
+      if(data.type == "message") {
+            if(data.text.indexOf(":+1:") != -1) graph.add(1);
+            if(data.text.indexOf(":-1:") != -1) graph.add(0);
+      }
+
     });
     bot.on('start', function () {
       var params = {
         icon_emoji: ':cat:'
       };
-      bot.postMessageToChannel('test', 'hoge', params);
+      bot.postMessageToChannel('h-test', 'hoge', params);
     });
+
   </script>
 
   <div id="screen">
