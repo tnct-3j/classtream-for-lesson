@@ -4,14 +4,14 @@ class Comment {
      *
      * エレメントをラップ
      */
-    constructor(child) {
+    constructor(child, minute=300) {
         self = document.createElement("div");
         self.setAttribute("class", "marquee");
         self.append(child);
 
         setTimeout(() => {
             self.remove();
-        }, 10000);
+        }, 1000 * minute);
         return self;
     }
     /**
@@ -44,8 +44,3 @@ class Screen {
 
 var screen = new Screen("screen");
 
-// コンストラクタの引数に設定した、
-// element内でhelloって文字が流れる
-var p = document.createElement("p");
-p.innerText = "hello";
-screen.send(p);
