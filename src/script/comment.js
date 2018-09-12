@@ -4,11 +4,26 @@ class Comment {
      *
      * エレメントをラップ
      */
-    constructor(child, minute=300) {
-        self = document.createElement("div");
+    constructor(child) {
+        var self = document.createElement("div");
         self.setAttribute("class", "marquee");
         self.append(child);
+        
+        ////////////////////////////////////////////
 
+        //innerTextの文字数を取得
+        var word = self.innerText.length;
+        
+        //追加ピクセル数
+        var px = word*9.8;
+        
+        var style = "width:" + px + "px";
+        console.log(word);
+
+        //cssに適応させる
+        self.setAttribute( "style", style ) ;
+       ////////////////////////////////////////////
+        
         setTimeout(() => {
             self.remove();
         }, 1000 * minute);
@@ -40,7 +55,7 @@ class Screen {
         var comment = new Comment(element);
         this.screen.appendChild(comment);
     }
+
 }
 
 var screen = new Screen("screen");
-
