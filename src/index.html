@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <title>3J Classtream</title>
-
-  <link rel="stylesheet" type="text/css" href="style/marquee.css">
-
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 </head>
 
-<body>
+<body style="overflow: hidden;">
+  <figure class="relative">
+    <canvas id="graph" height="350" width="600"></canvas>
+    <figcaption class="absolute">
+      <div id="screen"></div>
+    </figcaption>
+  </figure>
+
   <script>
     var slackbot = require('slackbots');
     var config = require('./config');
@@ -30,6 +35,12 @@
       * Slackからメッセージを受け取る
       */
     bot.on('message', function (data) {
+      if(data.type == "message") {
+        if(data.text.indexOf(":+1:") != -1) graph.add(1);
+        if(data.text.indexOf(":-1:") != -1) graph.add(0);
+        screen.send(data.text);
+      }
+      
       console.log(data);
     });
 
@@ -40,15 +51,13 @@
       var params = {
         icon_emoji: ':cat:'
       };
+
       bot.postMessageToChannel(key.channel, 'Start classtream !', params);
     });
   </script>
 
-  <div id="screen">
-  </div>
   <script src='script/comment.js'></script>
-
-  <canvas id="graph" height="350" width="600"></canvas>
   <script src="script/graph.js"></script>
 </body>
+
 </html>
