@@ -4,7 +4,7 @@ class Comment {
      *
      * エレメントをラップ
      */
-    constructor(child) {
+    constructor(child, minute=300) {
         var self = document.createElement("div");
         self.setAttribute("class", "marquee");
         self.append(child);
