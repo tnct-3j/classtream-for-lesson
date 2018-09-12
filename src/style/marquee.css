@@ -10,8 +10,15 @@ div.marquee {
     animation-timing-function: linear;
 }
 @keyframes marquee {
-    from    { transform: translate(0%); } 
-    100%,to { transform: translate(-100%); }
+    from    {
+        transform: translate(0%);
+    } 
+    100%,to {
+        transform: translate(-100%);
+    }
+    100% {
+        visibility: hidden;
+    }
 }
 
 body{

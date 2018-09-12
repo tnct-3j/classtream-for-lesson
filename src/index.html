@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>3J Classtream</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style/marquee.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 </head>
@@ -12,9 +13,8 @@
 <body style="overflow: hidden;">
   <figure class="relative">
     <canvas id="graph" height="350" width="600"></canvas>
-    <figcaption class="absolute">
-      <div id="screen"></div>
-    </figcaption>
+
+    <figcaption class="absolute" id="screen"></figcaption>
   </figure>
 
   <script>
