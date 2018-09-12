@@ -1,14 +1,19 @@
+
 /* 表示領域に合わせてサイズと余白を設定 */
 div.marquee {
-    width: 600px;
-    padding-left: 900px;
+    font-size: 16px;
+    padding-left: 100%;
     white-space: nowrap;
-
-    animation-name: marquee;
+        
     animation-duration: 10s;
+    animation-name: marquee;
     animation-timing-function: linear;
 }
 @keyframes marquee {
     from    { transform: translate(0%); } 
     100%,to { transform: translate(-100%); }
+}
+
+body{
+    overflow: hidden;
 }
