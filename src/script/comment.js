@@ -6,7 +6,7 @@ class Comment {
      *
      * エレメントをラップ
      */
-    constructor(child, minute=10) {
+    constructor(child) {
         var self = document.createElement("div");
         self.setAttribute("class", "marquee");
         self.append(child);
@@ -29,7 +29,7 @@ class Comment {
         
         setTimeout(() => {
             self.remove();
-        }, 1000 * minute);
+        }, 10000 );
         return self;
     }
     /**
