@@ -163,7 +163,4 @@ class Graph extends Chart {
     }
 }
 
-
-
-
 var graph = new Graph("graph", 10);

@@ -1,4 +1,3 @@
-var width = window.innerWidth;
 
 class Comment {
     /**
@@ -8,14 +7,28 @@ class Comment {
      */
     constructor(child) {
         var self = document.createElement("marquee");
-        self.append(child);
+
         self.loop = 1;
-        self.style.position = "position:absolute";
-        self.style.top = (Math.floor( Math.random() * 50 )).toString() + "%";
+        self.scrolldelay = 10000;
+        self.truespeed = true;
+
+        self.append(child);
+        self.style.position = "absolute";
+        
+        var position = Math.random() * (window.innerHeight / 2);
+        position = Math.floor(position).toString() + "px";
+        
+        if (Math.random() < 0.5) {
+            self.style.top = position;
+
+        } else {
+            self.style.bottom = position;
+        }
 
         setTimeout(() => {
             self.remove();
-        }, 10000 );
+        }, 50000);
+
         return self;
     }
     /**
