@@ -1,3 +1,4 @@
+var id = 0;
 
 class Comment {
     /**
@@ -7,7 +8,9 @@ class Comment {
      */
     constructor(child) {
         var self = document.createElement("marquee");
-
+        
+        id ++;
+        self.id = "comment" + id;
         self.loop = 1;
         self.scrolldelay = 10000;
         self.truespeed = true;
@@ -56,6 +59,8 @@ class Screen {
     send(element) {
         var comment = new Comment(element);
         this.screen.appendChild(comment);
+
+        return comment;
     }
 
 }

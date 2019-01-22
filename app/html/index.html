@@ -9,6 +9,22 @@
   
   <link rel="stylesheet" href="../css/screen.css"></link>
   <link rel="stylesheet" href="../css/graph.css"></link>
+
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ 
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']], 
+        displayMath: [['$$','$$'], ['\\[','\\]']], 
+        processEscapes: true 
+      }
+    });
+  </script>
+
+  <marquee>$\frac{f}{b}$</marquee>
+
+
 </head>
 
 <body>
@@ -44,9 +60,12 @@
           }
           if (data.text != "") {
               var element = document.createElement('p');
+              element.id = "comment";
               element.style = "font-size: 30px";
               element.innerText = data.text;
-              screen.send(element);
+              var comment = screen.send(element);
+
+              MathJax.Hub.Queue(["Typeset", MathJax.Hub, comment.id]);
           }
       }
       
