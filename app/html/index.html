@@ -6,11 +6,13 @@
   <title>3J Classtream</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  
+  <link rel="stylesheet" href="../css/screen.css"></link>
 </head>
 
 <body>
-  <div id="screen" style="position: relative;">
-    <canvas id="graph" height="350" width="600" style="position: relative;"></canvas>
+  <div id="screen" class="screen">
+    <canvas id="graph" height="350" width="600" class="graph"></canvas>
   </div>
 
   <script>
@@ -31,9 +33,20 @@
       */
     bot.on('message', function (data) {
       if(data.type == "message") {
-        if(data.text.indexOf(":+1:") != -1) graph.add(1);
-        if(data.text.indexOf(":-1:") != -1) graph.add(0);
-        screen.send(data.text);
+          if(data.text.indexOf(":+1:") != -1) {
+              graph.add(1);
+              data.text = data.text.replace(":+1:", "");
+          }
+          if(data.text.indexOf(":-1:") != -1) {
+              graph.add(0);
+              data.text = data.text.replace(":-1:", "");
+          }
+          if (data.text != "") {
+              var element = document.createElement('p');
+              element.style = "font-size: 30px";
+              element.innerText = data.text;
+              screen.send(element);
+          }
       }
       
       console.log(data);
