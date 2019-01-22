@@ -9,11 +9,15 @@ class Comment {
     constructor(child) {
         var self = document.createElement("marquee");
         
+        console.log(child.innerText.length);
+        var speed = 10 * Math.sqrt(Math.sqrt(child.innerText.length));
+        console.log(speed);
         id ++;
+
         self.id = "comment" + id;
         self.loop = 1;
-        self.scrolldelay = 10000;
-        self.truespeed = true;
+        self.setAttribute("scrollamount", speed);
+        self.setAttribute("truespeed", true);
 
         self.append(child);
         self.style.position = "absolute";
