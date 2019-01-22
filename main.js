@@ -19,7 +19,7 @@ app.on('ready', function() {
      height: 800,
      icon: __dirname + '/src/icons/comix.ico',
   });
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/app/html/index.html');
 
   mainWindow.webContents.openDevTools();
 

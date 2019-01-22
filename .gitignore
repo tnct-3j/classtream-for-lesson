@@ -62,5 +62,5 @@ typings/
 
 package-lock.json
 
-src/config.json
-src/.vscode/launch.json
+config.json
+.vscode/*
