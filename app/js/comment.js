@@ -55,7 +55,8 @@ class MarqueeComment {
 
         setTimeout(() => {
             self.remove();
-        }, 50000);
+        }, 10000);
+        
 
         return self;
     }

@@ -64,3 +64,6 @@ package-lock.json
 
 config.json
 .vscode/*
+
+log.json
+log.json.backup

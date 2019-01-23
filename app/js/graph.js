@@ -23,7 +23,7 @@ class Graph extends Chart {
                 datasets: [
                     {
                         //�}��
-                        label: "+1",
+                        label: "-1",
                         //�ʂ̕\��
                         fill: false,
                         //���̃J�[�u
@@ -51,7 +51,7 @@ class Graph extends Chart {
                     },
                     {
                         //�}��
-                        label: "-1",
+                        label: "+1",
                         //�ʂ̕\��
                         fill: false,
                         //���̃J�[�u
@@ -163,4 +163,4 @@ class Graph extends Chart {
     }
 }
 
-var graph = new Graph("graph", 10);
+var graph = new Graph("graph", 60);

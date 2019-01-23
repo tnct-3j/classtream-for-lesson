@@ -6,6 +6,8 @@
   <title>3J Classtream</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+  <script src='../js/log.js'></script>
   
   <link rel="stylesheet" href="../css/screen.css"></link>
   <link rel="stylesheet" href="../css/graph.css"></link>
@@ -31,17 +33,20 @@
   </div>
 
   <script>
+    var remote = require('electron').remote
     var slackbot = require('slackbots');
     var fs = require('fs');
 
     // 設定を読み込む
     var config = fs.readFileSync('config.json', 'utf-8');
-    var key = JSON.parse(config);
+    config = JSON.parse(config);
 
     var bot = new slackbot({
-      token: key.token,
-      name: 'classtream'
+      token: config.token,
+      name: '#h-test'
     });
+
+    var log = new Log();
 
     /**
       * Slackからメッセージを受け取る
@@ -50,6 +55,8 @@
       console.log(data);
 
       if(data.type == "message") {
+          log.add(data.user, data.text);
+
           if(data.text.indexOf(":+1:") != -1) {
               graph.add(1);
               data.text = data.text.replace(":+1:", "");
@@ -62,17 +69,34 @@
           if (data.text == "") return;
 
           var element = document.createElement('p');
-          
+          var comment = null;
+
+          if(data.text == "exit") {
+              log.save();
+
+              alert("close");
+              var message = log.toString();
+              
+              message = '```\n' + message + '\n```' 
+              
+              //bot.postMessageToChannel(config.channel, message, {
+              //    icon_emoji: ':cat:'
+              //}, () => {
+                  var window = remote.getCurrentWindow();
+                  window.close();
+              //});
+          }
+
           if (data.text.substr(0, 4) == '&gt;') {
               element.innerText = data.text.substr(4);
-              var comment = screen.send(element, true, {
+              comment = screen.send(element, true, {
                   ts: data.ts
               });
           }
 
           else {
               element.innerText = data.text;
-              var comment = screen.send(element);
+              comment = screen.send(element);
           }
           
           MathJax.Hub.Queue(["Typeset", MathJax.Hub, comment.id]);
@@ -95,7 +119,7 @@
         icon_emoji: ':cat:'
       };
 
-      bot.postMessageToChannel(key.channel, 'Start classtream !', params);
+      bot.postMessageToChannel(config.channel, 'Start classtream !', params);
     });
   </script>
 
