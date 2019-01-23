@@ -9,6 +9,7 @@
   
   <link rel="stylesheet" href="../css/screen.css"></link>
   <link rel="stylesheet" href="../css/graph.css"></link>
+  <link rel="stylesheet" href="../css/comment.css"></link>
 
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
@@ -46,6 +47,8 @@
       * Slackからメッセージを受け取る
       */
     bot.on('message', function (data) {
+      console.log(data);
+
       if(data.type == "message") {
           if(data.text.indexOf(":+1:") != -1) {
               graph.add(1);
@@ -55,18 +58,33 @@
               graph.add(0);
               data.text = data.text.replace(":-1:", "");
           }
-          if (data.text != "") {
-              var element = document.createElement('p');
-              element.id = "comment";
-              element.style = "font-size: 30px";
+
+          if (data.text == "") return;
+
+          var element = document.createElement('p');
+          
+          if (data.text.substr(0, 4) == '&gt;') {
+              element.innerText = data.text.substr(4);
+              var comment = screen.send(element, true, {
+                  ts: data.ts
+              });
+          }
+
+          else {
               element.innerText = data.text;
               var comment = screen.send(element);
-
-              MathJax.Hub.Queue(["Typeset", MathJax.Hub, comment.id]);
           }
+          
+          MathJax.Hub.Queue(["Typeset", MathJax.Hub, comment.id]);
       }
-      
-      console.log(data);
+
+      if (data.type == "reaction_added") {
+          if (data.reaction != "+1") return;
+          var ts = data.item.ts;
+          screen.fixed.remove((data) => {
+              return data.option.ts == ts;
+          });
+      }
     });
 
     /**
