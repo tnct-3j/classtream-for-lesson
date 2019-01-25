@@ -1,4 +1,8 @@
 var id = 0;
+var size = {
+    marquee: 30,
+    fixed: 40
+};
 
 
 class FixedComment {
@@ -9,6 +13,30 @@ class FixedComment {
      */
     constructor(child) {
         var self = document.createElement("div");
+
+        
+        var add_line = (src) => {
+            var dest = "";
+            var n = window.innerWidth / (size.fixed);
+            n = parseInt(n);
+            var a = [];
+            var r = new RegExp(".{1," + n + "}","g");
+            
+            src.replace(r, (e) => {
+                return a.push(e), ""
+            })
+            
+            for (var line of a) {
+                dest += line + "\n";
+            }
+            
+            console.log(dest);
+            return dest;
+        };
+
+        
+        child.innerText = add_line(child.innerText);
+
         self.className = "fixed";
         self.append(child);
 
@@ -29,8 +57,16 @@ class MarqueeComment {
     constructor(child) {
         var self = document.createElement("marquee");
 
-        console.log(child.innerText.length);
-        var speed = 10 * Math.sqrt(Math.sqrt(child.innerText.length));
+        child.innerHTML += "　　　　　　　";
+
+        var speed = null;
+        if (child.innerText.length < 40) {
+            speed = 10 * Math.sqrt(Math.sqrt(child.innerText.length));
+        }
+        else {
+            speed = 10 * Math.sqrt(child.innerText.length);
+        }
+
         console.log(speed);
         id ++;
 
@@ -38,9 +74,11 @@ class MarqueeComment {
         self.id = "comment" + id;
         self.loop = 1;
         self.setAttribute("scrollamount", speed);
-        self.setAttribute("truespeed", true);
+        //self.setAttribute("scrolldelay", speed);
+        self.setAttribute("truespeed", "truespeed");
 
         self.append(child);
+        
         self.className = "marquee";
         
         var position = Math.random() * (window.innerHeight / 2);
@@ -55,7 +93,7 @@ class MarqueeComment {
 
         setTimeout(() => {
             self.remove();
-        }, 10000);
+        }, 30000);
         
 
         return self;
