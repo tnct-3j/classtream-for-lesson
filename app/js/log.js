@@ -27,7 +27,7 @@ class Log {
 
         setInterval(() => {
             var fs = require('fs');
-            fs.writeFileSync(FILE_NAME + '.backup', self.toString())
+            fs.writeFileSync(FILE_NAME)
         }, 60 * 1000);
     }
 
