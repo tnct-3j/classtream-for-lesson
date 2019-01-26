@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>3J Classtream</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+  <script src='../js/log.js'></script>
+  
+  <link rel="stylesheet" href="../css/screen.css"></link>
+  <link rel="stylesheet" href="../css/graph.css"></link>
+  <link rel="stylesheet" href="../css/comment.css"></link>
+
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ 
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']], 
+        displayMath: [['$$','$$'], ['\\[','\\]']], 
+        processEscapes: true 
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="screen" class="screen">
+    <canvas id="graph" height="350" width="600" class="graph"></canvas>
+  </div>
+
+  <script>
+    var remote = require('electron').remote
+    var slackbot = require('slackbots');
+    var fs = require('fs');
+
+    // 設定を読み込む
+    var config = fs.readFileSync('config.json', 'utf-8');
+    config = JSON.parse(config);
+
+    var bot = new slackbot({
+      token: config.token,
+      name: '#h-test'
+    });
+
+    var log = new Log();
+
+    /**
+      * Slackからメッセージを受け取る
+      */
+    bot.on('message', function (data) {
+      console.log(data);
+
+      if(data.type == "message") {
+          log.add(data.user, data.text);
+
+          if(data.text.indexOf(":+1:") != -1) {
+              graph.add(1);
+              data.text = data.text.replace(":+1:", "");
+          }
+          if(data.text.indexOf(":-1:") != -1) {
+              graph.add(0);
+              data.text = data.text.replace(":-1:", "");
+          }
+
+          if(data.text == "reset") {
+              screen.fixed.removeAll()
+          }
+
+
+          if (data.text == "") return;
+
+          var element = document.createElement('p');
+          var comment = null;
+
+          if(data.text == "exit") {
+              log.save();
+
+              alert("close");
+              var message = log.toString();
+              
+              message = '```\n' + message + '\n```' 
+              
+              //bot.postMessageToChannel(config.channel, message, {
+              //    icon_emoji: ':cat:'
+              //}, () => {
+                  var window = remote.getCurrentWindow();
+                  window.close();
+              //});
+          }
+
+          if (data.text.substr(0, 4) == '&gt;') {
+              element.innerText = data.text.substr(4);
+              comment = screen.send(element, true, {
+                  ts: data.ts
+              });
+          }
+
+          else {
+              element.innerText = data.text;
+              comment = screen.send(element);
+          }
+          
+          MathJax.Hub.Queue(["Typeset", MathJax.Hub, comment.id]);
+      }
+
+      if (data.type == "reaction_added") {
+          if (data.reaction != "+1") return;
+          var ts = data.item.ts;
+          screen.fixed.remove((data) => {
+              return data.option.ts == ts;
+          });
+      }
+    });
+
+    /**
+      * Classtreamの開始メッセージを送信
+      */
+    bot.on('start', function () {
+      var params = {
+        icon_emoji: ':cat:'
+      };
+
+      bot.postMessageToChannel(config.channel, 'Start classtream !', params);
+    });
+  </script>
+
+  <script src='../js/comment.js'></script>
+  <script src='../js/graph.js'></script>
+</body>
+
+</html>
+    
