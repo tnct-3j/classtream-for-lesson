@@ -130,6 +130,13 @@ class FixedController {
 
         return null;
     }
+    removeAll() {
+        while (true) {
+            var element = this.list.pop()
+            if (element == undefined) return;
+            element.comment.remove();
+        }
+    }
 }
 
 class Screen {

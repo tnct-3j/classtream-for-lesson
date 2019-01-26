@@ -66,6 +66,11 @@
               data.text = data.text.replace(":-1:", "");
           }
 
+          if(data.text == "reset") {
+              screen.fixed.removeAll()
+          }
+
+
           if (data.text == "") return;
 
           var element = document.createElement('p');
