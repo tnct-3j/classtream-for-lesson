@@ -75,7 +75,7 @@ class Graph extends Chart {
                         //�����_���O�Ń}�E�X�z�o�[��F������͈́i�s�N�Z���P�ʁj
                         pointHitRadius: 10,
                         //�O���t�̃f�[�^
-                        data: []
+                        data: [0]
                     }
                 ]
             },
@@ -163,4 +163,4 @@ class Graph extends Chart {
     }
 }
 
-var graph = new Graph("graph", 60);
+var graph = new Graph("graph", 5 * 60);
